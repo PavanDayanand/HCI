@@ -1,5 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -10,6 +11,7 @@ import UnpublishedOutlinedIcon from "@mui/icons-material/UnpublishedOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import {
   Box,
+  Alert,
   Button,
   Chip,
   Dialog,
@@ -34,7 +36,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Model } from "survey-core";
@@ -44,6 +46,7 @@ import { FormMark } from "../../components/FormMark.tsx";
 import { EmptyState } from "../../components/EmptyState.tsx";
 import { PageHeader } from "../../components/PageHeader.tsx";
 import { useForms } from "../../forms/useForms.ts";
+import { importSurvey } from "../../forms/importSurvey.ts";
 import { useColorMode } from "../../theme/useColorMode.ts";
 import { formatWhen } from "../../types/form.ts";
 import type { FormRecord, FormStatus } from "../../types/form.ts";
@@ -54,7 +57,10 @@ export function FormBuilderPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { mode } = useColorMode();
-  const { forms, publishForm, unpublishForm, deleteForm } = useForms();
+  const { forms, saveForm, publishForm, unpublishForm, deleteForm } = useForms();
+  const uploadInput = useRef<HTMLInputElement>(null);
+  const [importError, setImportError] = useState("");
+  const [importing, setImporting] = useState(false);
   const [search, setSearch] = useState("");
   const [formToDelete, setFormToDelete] = useState<FormRecord | null>(null);
   const [previewForm, setPreviewForm] = useState<FormRecord | null>(null);
@@ -87,11 +93,45 @@ export function FormBuilderPage() {
         title="Form Builder"
         subtitle="Create, edit, and publish forms."
         action={
-          <Button variant="contained" startIcon={<AddIcon />} onClick={() => navigate("/admin/forms/new")}>
-            Create form
-          </Button>
+          <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+            <Button variant="outlined" startIcon={<UploadFileOutlinedIcon />} disabled={importing} onClick={() => uploadInput.current?.click()}>
+              {importing ? "Importing…" : "Upload JSON"}
+            </Button>
+            <Button variant="contained" startIcon={<AddIcon />} onClick={() => navigate("/admin/forms/new")}>
+              Create form
+            </Button>
+          </Box>
         }
       />
+
+      <input
+        ref={uploadInput}
+        type="file"
+        accept=".json,application/json"
+        aria-label="Upload SurveyJS JSON"
+        hidden
+        onChange={async (event) => {
+          const file = event.currentTarget.files?.[0];
+          event.currentTarget.value = "";
+          if (!file) return;
+          setImportError("");
+          if (file.size > 5 * 1024 * 1024) {
+            setImportError("Choose a JSON file smaller than 5 MB.");
+            return;
+          }
+          setImporting(true);
+          try {
+            const form = importSurvey(await file.text(), file.name);
+            saveForm(form);
+            navigate(`/admin/forms/${form.id}/edit`);
+          } catch (error) {
+            setImportError(error instanceof Error ? error.message : "Unable to import this file. Please try again.");
+          } finally {
+            setImporting(false);
+          }
+        }}
+      />
+      {importError ? <Alert severity="error" onClose={() => setImportError("")} sx={{ mb: 3 }}>{importError}</Alert> : null}
 
       <Paper elevation={0} sx={{ overflow: "hidden", bgcolor: "transparent" }}>
         <Box
