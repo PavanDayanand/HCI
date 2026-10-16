@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -39,6 +40,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Model } from "survey-core";
 import { PlainDark, PlainLight } from "survey-core/themes";
 import { Survey } from "survey-react-ui";
+import { FormMark } from "../../components/FormMark.tsx";
 import { EmptyState } from "../../components/EmptyState.tsx";
 import { PageHeader } from "../../components/PageHeader.tsx";
 import { useForms } from "../../forms/useForms.ts";
@@ -91,20 +93,21 @@ export function FormBuilderPage() {
         }
       />
 
-      <Paper elevation={0} sx={{ overflow: "hidden", borderRadius: 3, border: 1, borderColor: "divider" }}>
+      <Paper elevation={0} sx={{ overflow: "hidden", bgcolor: "transparent" }}>
         <Box
           sx={{
-            px: 2,
-            py: 1.5,
+            pb: 3,
             display: "flex",
             alignItems: "center",
             gap: 2,
             flexWrap: "wrap",
-            borderBottom: 1,
-            borderColor: "divider",
+
           }}
         >
           <Tabs
+            aria-label="Form status"
+            variant="scrollable"
+            scrollButtons="auto"
             value={tab}
             onChange={(_event, nextTab: BuilderTab) => {
               if (nextTab === "active") {
@@ -113,28 +116,74 @@ export function FormBuilderPage() {
               }
               setSearchParams({ tab: nextTab });
             }}
-            sx={{ minHeight: 40, "& .MuiTab-root": { minHeight: 40 } }}
+            sx={{
+              minHeight: 38,
+              p: 0.5,
+              maxWidth: "100%",
+              bgcolor: "action.hover",
+              borderRadius: "999px",
+              "& .MuiTabs-indicator": { display: "none" },
+              "& .MuiTabs-list": { gap: 0.5 },
+              "& .MuiTab-root": {
+                minHeight: 34,
+                minWidth: 0,
+                px: 1.5,
+                py: 0.75,
+                borderRadius: "999px",
+                fontSize: 13,
+                textTransform: "none",
+                color: "text.secondary",
+              },
+              "& .MuiTab-root.Mui-selected": { bgcolor: "background.paper", color: "text.primary", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" },
+            }}
           >
-            <Tab value="active" label={`Active (${activeForms.length})`} />
-            <Tab value="draft" label={`Drafts (${draftForms.length})`} />
+            <Tab value="active" label={<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>Active <Box component="span" sx={{ fontSize: 11, opacity: 0.6 }}>{activeForms.length}</Box></Box>} />
+            <Tab value="draft" label={<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>Drafts <Box component="span" sx={{ fontSize: 11, opacity: 0.6 }}>{draftForms.length}</Box></Box>} />
             <Tab value="ai" label="AI Builder" />
           </Tabs>
           {tab !== "ai" ? (
             <TextField
               size="small"
-              placeholder="Search"
+              placeholder="Search forms…"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               slotProps={{
+                htmlInput: { "aria-label": "Search forms" },
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon fontSize="small" />
+                      <Box sx={{ display: "grid", placeItems: "center", width: 26, height: 26, borderRadius: "7px", bgcolor: "background.paper", color: "primary.main", border: 1, borderColor: "divider" }}>
+                        <SearchIcon sx={{ fontSize: 17 }} />
+                      </Box>
                     </InputAdornment>
                   ),
+                  endAdornment: search ? (
+                    <InputAdornment position="end">
+                      <IconButton size="small" aria-label="Clear search" onClick={() => setSearch("")}>
+                        <CloseIcon sx={{ fontSize: 16 }} />
+                      </IconButton>
+                    </InputAdornment>
+                  ) : null,
                 },
               }}
-              sx={{ ml: "auto", width: 260 }}
+              sx={{
+                ml: { sm: "auto" },
+                width: { xs: "100%", sm: 280 },
+                "& .MuiOutlinedInput-root": {
+                  fontSize: 13,
+                  borderRadius: "12px",
+                  bgcolor: "action.hover",
+                  pl: 1,
+                  transition: "background-color 0.2s, box-shadow 0.2s",
+                  "& fieldset": { borderColor: "transparent" },
+                  "&:hover fieldset": { borderColor: "divider" },
+                  "&.Mui-focused": {
+                    bgcolor: "background.paper",
+                    boxShadow: "0 0 0 3px rgba(107,156,119,0.12)",
+                  },
+                  "&.Mui-focused fieldset": { borderColor: "primary.main", borderWidth: 1 },
+                },
+              }}
             />
           ) : null}
         </Box>
@@ -160,13 +209,13 @@ export function FormBuilderPage() {
           />
         ) : (
           <TableContainer>
-            <Table>
+            <Table aria-label="Forms" sx={{ "& td, & th": { px: { xs: 1.5, sm: 2.5 } }, "& th": { borderTop: 1, borderColor: "divider", py: 1.5 }, "& tbody tr:last-child td": { borderBottom: 1, borderColor: "divider" } }}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell width={140}>Status</TableCell>
-                  <TableCell width={180}>Updated</TableCell>
-                  <TableCell align="right" width={120} sx={{ whiteSpace: "nowrap" }}>
+                  <TableCell>Form name</TableCell>
+                  <TableCell sx={{ width: { xs: 75, sm: 140 } }}>Status</TableCell>
+                  <TableCell sx={{ width: 180, display: { xs: "none", sm: "table-cell" } }}>Updated</TableCell>
+                  <TableCell align="right" sx={{ width: { xs: 48, sm: 100 }, whiteSpace: "nowrap" }}>
                     Actions
                   </TableCell>
                 </TableRow>
@@ -175,15 +224,33 @@ export function FormBuilderPage() {
                 {visibleForms.map((form) => (
                   <TableRow key={form.id} hover>
                     <TableCell>
-                      <Typography sx={{ fontWeight: 600 }}>{form.title}</Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                        <Box sx={{ display: { xs: "none", sm: "block" } }}><FormMark /></Box>
+                        <Box>
+                      <Button
+                        variant="text"
+                        color="inherit"
+                        onClick={() => navigate(`/admin/forms/${form.id}/edit`)}
+                        sx={{
+                          p: 0,
+                          minWidth: 0,
+                          justifyContent: "flex-start",
+                          textAlign: "left",
+                          "&:hover": { bgcolor: "transparent", textDecoration: "underline" },
+                        }}
+                      >
+                        {form.title}
+                      </Button>
+                      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, fontSize: 13 }}>
                         {form.description || "No description"}
                       </Typography>
+                        </Box>
+                      </Box>
                     </TableCell>
                     <TableCell>
                       <StatusChip status={form.status} />
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                       <Typography variant="body2" color="text.secondary">
                         {formatWhen(form.updatedAt)}
                       </Typography>
@@ -204,6 +271,11 @@ export function FormBuilderPage() {
             </Table>
           </TableContainer>
         )}
+        {tab !== "ai" && visibleForms.length > 0 ? (
+          <Typography sx={{ mt: 2, fontSize: 12, color: "text.secondary" }}>
+            {visibleForms.length} {tab === "active" ? "active" : "draft"} {visibleForms.length === 1 ? "form" : "forms"}{query ? " matching your search" : ""}
+          </Typography>
+        ) : null}
       </Paper>
 
       <Dialog open={Boolean(formToDelete)} onClose={() => setFormToDelete(null)} fullWidth maxWidth="xs">

@@ -9,15 +9,15 @@ export function createAppTheme(mode: ColorMode) {
     palette: {
       mode,
       primary: {
-        main: light ? "#12823c" : "#2ecc71",
+        main: light ? "#285b45" : "#90c6a5",
       },
       background: {
-        default: light ? "#f6f7f9" : "#0c0d0f",
-        paper: light ? "#ffffff" : "#16181d",
+        default: light ? "#eeeee8" : "#111510",
+        paper: light ? "#fdfdf9" : "#1a201b",
       },
       text: {
-        primary: light ? "#1b1c1e" : "#f4f5f7",
-        secondary: light ? "#5c5f66" : "#9aa0a6",
+        primary: light ? "#252c25" : "#edf1e8",
+        secondary: light ? "#73776e" : "#a6afa1",
       },
       divider: light ? "rgba(15, 17, 21, 0.1)" : "rgba(255, 255, 255, 0.08)",
     },
@@ -25,9 +25,9 @@ export function createAppTheme(mode: ColorMode) {
       borderRadius: 12,
     },
     typography: {
-      fontFamily: '"Inter", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif',
       h4: {
-        fontSize: "1.75rem",
+        fontSize: "1.6rem",
         fontWeight: 600,
         letterSpacing: "-0.03em",
       },
@@ -47,8 +47,10 @@ export function createAppTheme(mode: ColorMode) {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 8,
-            paddingInline: 14,
+            borderRadius: 9,
+            boxShadow: "none",
+            paddingInline: 16,
+            "&:hover": { boxShadow: "none" },
           },
         },
       },
@@ -88,7 +90,8 @@ export function createAppTheme(mode: ColorMode) {
         styleOverrides: {
           root: {
             "&.Mui-selected": {
-              backgroundColor: light ? "rgba(15, 17, 21, 0.06)" : "rgba(255, 255, 255, 0.08)",
+              backgroundColor: light ? "#ffffff" : "rgba(255, 255, 255, 0.08)",
+              boxShadow: light ? "0 1px 4px rgba(15, 17, 21, 0.06)" : "none",
               "&:hover": {
                 backgroundColor: light ? "rgba(15, 17, 21, 0.09)" : "rgba(255, 255, 255, 0.12)",
               },
@@ -100,9 +103,10 @@ export function createAppTheme(mode: ColorMode) {
         styleOverrides: {
           root: {
             "& .MuiTableCell-root": {
-              fontWeight: 600,
-              color: light ? "#3c3f46" : "#c5c9d0",
-              backgroundColor: light ? "#f7f8fa" : "#1c1e24",
+              fontWeight: 500,
+              fontSize: 12,
+              color: light ? "#6a6c70" : "#c5c9d0",
+              backgroundColor: "transparent",
             },
           },
         },
@@ -110,7 +114,17 @@ export function createAppTheme(mode: ColorMode) {
       MuiTableCell: {
         styleOverrides: {
           root: {
-            borderColor: light ? "rgba(15, 17, 21, 0.08)" : "rgba(255, 255, 255, 0.08)",
+            borderColor: light ? "rgba(15, 17, 21, 0.06)" : "rgba(255, 255, 255, 0.08)",
+            padding: "18px 20px",
+          },
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: { fontWeight: 500, fontSize: 12, height: 25 },
+          colorSuccess: {
+            backgroundColor: light ? "#eaf6ee" : "#19372a",
+            color: light ? "#237847" : "#8bdbac",
           },
         },
       },

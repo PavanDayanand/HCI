@@ -1,12 +1,9 @@
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import DynamicFormOutlinedIcon from "@mui/icons-material/DynamicFormOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import MenuIcon from "@mui/icons-material/Menu";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import {
   Box,
@@ -20,13 +17,12 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  SvgIcon,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import hciLogo from "../assets/hci-logo.png";
-import hciMark from "../assets/hci-mark.png";
 import type { AppRole } from "../role/roleContext.ts";
 import { useRole } from "../role/useRole.ts";
 import { useColorMode } from "../theme/useColorMode.ts";
@@ -107,36 +103,16 @@ export function AppLayout() {
           flexShrink: 0,
         }}
       >
-        <IconButton onClick={() => setMobileOpen(true)} sx={{ display: { md: "none" } }} aria-label="Open navigation">
-          <MenuIcon />
-        </IconButton>
-        <Box
-          component="img"
-          src={collapsed ? hciMark : hciLogo}
-          alt="HCI Hutt City Intelligence"
-          sx={{
-            height: collapsed ? 32 : 44,
-            width: "auto",
-            maxWidth: collapsed ? 44 : 180,
-            objectFit: "contain",
-            display: "block",
-            flexShrink: 0,
-            bgcolor: "#fff",
-            borderRadius: 1,
-            p: 0.25,
-            boxSizing: "content-box",
-          }}
-        />
-        <Tooltip title={collapsed ? "Open sidebar" : "Collapse sidebar"}>
-          <IconButton
-            size="small"
-            onClick={() => setCollapsed((open) => !open)}
-            aria-label={collapsed ? "Open sidebar" : "Collapse sidebar"}
-            sx={{ display: { xs: "none", md: "inline-flex" }, flexShrink: 0 }}
-          >
-            {collapsed ? <ChevronRightIcon fontSize="small" /> : <ChevronLeftIcon fontSize="small" />}
-          </IconButton>
-        </Tooltip>
+        <Box sx={{ minWidth: 0, px: collapsed ? 0 : 1.25, py: 0.5, textAlign: collapsed ? "center" : "left" }}>
+          <Typography sx={{ fontSize: collapsed ? 18 : 24, fontWeight: 700, letterSpacing: "-0.055em", lineHeight: 1.15 }}>
+            HCI
+          </Typography>
+          {!collapsed ? (
+            <Typography sx={{ fontSize: 11, color: "text.secondary", mt: 0.5 }}>
+              Forms workspace
+            </Typography>
+          ) : null}
+        </Box>
       </Box>
 
       {!collapsed ? (
@@ -160,9 +136,11 @@ export function AppLayout() {
                   closeMobileNav();
                 }}
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: "9px",
+                  border: 1,
+                  borderColor: selected ? "divider" : "transparent",
                   mb: 0.5,
-                  minHeight: 36,
+                  minHeight: 42,
                   justifyContent: collapsed ? "center" : "flex-start",
                   px: collapsed ? 0.75 : 1.25,
                   width: "100%",
@@ -171,7 +149,7 @@ export function AppLayout() {
                 <ListItemIcon
                   sx={{
                     minWidth: collapsed ? 0 : 28,
-                    color: selected ? "text.primary" : "text.secondary",
+                    color: selected ? "primary.main" : "text.secondary",
                     justifyContent: "center",
                   }}
                 >
@@ -197,13 +175,16 @@ export function AppLayout() {
         }}
       >
         <ListItemButton
+          aria-label={`Switch workspace role, current role: ${role}`}
+          aria-haspopup="menu"
           onClick={(event: MouseEvent<HTMLElement>) => setRoleMenuEl(event.currentTarget)}
           sx={{
             borderRadius: 2,
             minHeight: 48,
-            px: collapsed ? 1 : 1,
+            px: 1,
+            minWidth: 0,
             justifyContent: collapsed ? "center" : "flex-start",
-            flex: 1,
+            flex: collapsed ? "none" : 1,
           }}
         >
           <ListItemIcon sx={{ minWidth: collapsed ? 0 : 36, color: "text.secondary", justifyContent: "center" }}>
@@ -223,11 +204,6 @@ export function AppLayout() {
             </>
           ) : null}
         </ListItemButton>
-        <Tooltip title={mode === "light" ? "Dark mode" : "Light mode"}>
-          <IconButton onClick={toggleMode} aria-label="Toggle color mode" size="small">
-            {mode === "light" ? <DarkModeOutlinedIcon fontSize="small" /> : <LightModeOutlinedIcon fontSize="small" />}
-          </IconButton>
-        </Tooltip>
       </Box>
     </Box>
   );
@@ -253,9 +229,9 @@ export function AppLayout() {
           width: sidebarWidth,
           flexShrink: 0,
           flexDirection: "column",
-          bgcolor: "background.paper",
-          borderRight: 1,
-          borderColor: "divider",
+          position: "sticky",
+          top: 0,
+          height: "100dvh",
           overflow: "hidden",
           transition: "width 0.2s ease",
         }}
@@ -263,15 +239,85 @@ export function AppLayout() {
         {sidebar}
       </Box>
 
-      <Box component="main" sx={{ flex: 1, minWidth: 0, px: { xs: 2.5, md: 4 }, py: { xs: 2.5, md: 3.5 } }}>
-        <Box sx={{ display: { md: "none" }, mb: 2 }}>
-          <IconButton onClick={() => setMobileOpen(true)} aria-label="Open navigation">
-            <MenuIcon />
-          </IconButton>
+      <Box sx={{ flex: 1, minWidth: 0, minHeight: "100dvh", display: "flex", flexDirection: "column", p: { xs: 1, md: 1.5 }, pt: { xs: 0, md: 0 }, pl: { md: 0 } }}>
+          <Box
+            component="header"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              minHeight: 64,
+              flexShrink: 0,
+              px: { xs: 1, md: 2 },
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Box sx={{ display: { xs: "none", md: "block" } }}>
+                <Tooltip title={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
+                  <IconButton
+                    aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+                    aria-expanded={!collapsed}
+                    onClick={() => setCollapsed((current) => !current)}
+                    sx={{ border: 1, borderColor: "divider", borderRadius: "9px", width: 36, height: 36 }}
+                  >
+                    <SidebarIcon expanded={!collapsed} />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <IconButton
+                onClick={() => {
+                  setCollapsed(false);
+                  setMobileOpen(true);
+                }}
+                aria-label="Open navigation"
+                aria-expanded={mobileOpen}
+                sx={{ display: { md: "none" }, border: 1, borderColor: "divider", borderRadius: "9px", width: 36, height: 36 }}
+              >
+                <SidebarIcon expanded={false} />
+              </IconButton>
+              <Typography sx={{ fontSize: 12, color: "text.secondary", fontWeight: 500 }}>Forms workspace</Typography>
+            </Box>
+            <Tooltip title={mode === "light" ? "Dark mode" : "Light mode"}>
+              <IconButton onClick={toggleMode} aria-label="Toggle color mode" size="small" sx={{ width: 36, height: 36 }}>
+                {mode === "light" ? <DarkModeOutlinedIcon sx={{ fontSize: 19 }} /> : <LightModeOutlinedIcon sx={{ fontSize: 19 }} />}
+              </IconButton>
+            </Tooltip>
+          </Box>
+        <Box
+          component="main"
+          sx={{
+            flex: 1,
+            minWidth: 0,
+            bgcolor: "background.paper",
+            border: 1,
+            borderColor: "divider",
+            borderRadius: "18px",
+            px: { xs: 2, md: 4 },
+            py: { xs: 3, md: 3.5 },
+          }}
+        >
+          <Outlet />
         </Box>
-        <Outlet />
       </Box>
       {roleMenu}
     </Box>
+  );
+}
+
+// The panel outline stays consistent; the arrow shows the next action.
+function SidebarIcon({ expanded }: { expanded: boolean }) {
+  return (
+    <SvgIcon sx={{ fontSize: 20 }} viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M9 4v16" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d={expanded ? "m16 9-3 3 3 3" : "m14 9 3 3-3 3"}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </SvgIcon>
   );
 }
