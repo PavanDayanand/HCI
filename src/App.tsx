@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { FormProvider } from "./forms/FormProvider.tsx";
 import { AppLayout } from "./layout/AppLayout.tsx";
+import { AnalyticsPage } from "./pages/admin/AnalyticsPage.tsx";
 import { FormBuilderPage } from "./pages/admin/FormBuilderPage.tsx";
 import { FormEditorPage } from "./pages/admin/FormEditorPage.tsx";
 import { FillFormPage } from "./pages/user/FillFormPage.tsx";
@@ -18,6 +19,7 @@ export default function App() {
               <Route element={<AppLayout />}>
                 <Route path="/" element={<Navigate to="/admin/forms" replace />} />
                 <Route path="/admin/forms" element={<FormBuilderPage />} />
+                <Route path="/admin/analytics" element={<AnalyticsPage />} />
                 <Route path="/forms" element={<FormsPage />} />
                 <Route path="/forms/:formId" element={<FillFormPage />} />
               </Route>

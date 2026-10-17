@@ -219,7 +219,7 @@ export function FormBuilderPage() {
                   "&:hover fieldset": { borderColor: "divider" },
                   "&.Mui-focused": {
                     bgcolor: "background.paper",
-                    boxShadow: "0 0 0 3px rgba(107,156,119,0.12)",
+                    boxShadow: "0 0 0 3px rgba(33,90,156,0.14)",
                   },
                   "&.Mui-focused fieldset": { borderColor: "primary.main", borderWidth: 1 },
                 },

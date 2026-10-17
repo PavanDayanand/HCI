@@ -9,15 +9,15 @@ export function createAppTheme(mode: ColorMode) {
     palette: {
       mode,
       primary: {
-        main: light ? "#285b45" : "#90c6a5",
+        main: light ? "#215a9c" : "#8eb6e8",
       },
       background: {
-        default: light ? "#eeeee8" : "#111510",
-        paper: light ? "#fdfdf9" : "#1a201b",
+        default: light ? "#e8eef5" : "#0e141c",
+        paper: light ? "#f7f9fc" : "#161d28",
       },
       text: {
-        primary: light ? "#252c25" : "#edf1e8",
-        secondary: light ? "#73776e" : "#a6afa1",
+        primary: light ? "#1c2433" : "#e8eef6",
+        secondary: light ? "#5d6673" : "#9aa6b8",
       },
       divider: light ? "rgba(15, 17, 21, 0.1)" : "rgba(255, 255, 255, 0.08)",
     },

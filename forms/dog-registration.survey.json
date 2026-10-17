@@ -1,0 +1,1470 @@
+{
+  "title": "Dog Registration",
+  "description": "Apply to register a new dog with Hutt City Council or transfer registration from another council.",
+  "showProgressBar": "top",
+  "progressBarType": "pages",
+  "showQuestionNumbers": "off",
+  "completeText": "Submit",
+  "completedHtml": "<h3>Application completed</h3><p>This prototype does not send your application to Hutt City Council.</p>",
+  "calculatedValues": [
+    {
+      "name": "d1_displayName",
+      "expression": "iif({d1_name} notempty, {d1_name}, 'your dog')"
+    },
+    {
+      "name": "d2_displayName",
+      "expression": "iif({d2_name} notempty, {d2_name}, 'your dog')"
+    }
+  ],
+  "pages": [
+    {
+      "name": "info",
+      "title": "Information",
+      "elements": [
+        {
+          "type": "html",
+          "name": "i1",
+          "html": "<h3>Register a new dog</h3>"
+        },
+        {
+          "type": "html",
+          "name": "i2",
+          "html": "<p>Use this form to apply to register your new dog with Hutt City Council, or to transfer your dog&#39;s registration from another area.<br><br>Once we have processed your application, we&#39;ll email or post you an invoice with a link to our online payments page. We will send your dog tag once payment is received. If your dog&#39;s registration for this year has already been paid to another council we will post you a tag free of charge.</p>"
+        },
+        {
+          "type": "html",
+          "name": "i3",
+          "html": "<p>Privacy statement<br>We collect the owner&#39;s name, date of birth, address and contact details as required under the Dog Control Act (1996). This information will be shared with the National Dog Database operated by the Department of Internal Affairs.</p>"
+        },
+        {
+          "type": "html",
+          "name": "i4",
+          "html": "<p>Before you start – if applicable you will need copies of your dog&#39;s: microchip number, desexing certification, proof of adoption (SPCA/HUHA), import proof of arrival, disability assist dog certification, and details of registration with another council.</p>"
+        }
+      ]
+    },
+    {
+      "name": "own",
+      "title": "Primary Owner",
+      "elements": [
+        {
+          "type": "html",
+          "name": "p1",
+          "html": "<h3>Your details</h3>"
+        },
+        {
+          "type": "html",
+          "name": "p2",
+          "html": "<p>You will be the person responsible for your dog/s fees and invoices.</p>"
+        },
+        {
+          "type": "text",
+          "name": "fn",
+          "title": "First Name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "ln",
+          "title": "Last Name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "dob",
+          "title": "Date of Birth",
+          "isRequired": true,
+          "description": "You must be at least 16 years old to be the registered owner of a dog.",
+          "inputType": "date"
+        },
+        {
+          "type": "html",
+          "name": "a0",
+          "html": "<h3>Address where the dog/s will live</h3>"
+        },
+        {
+          "type": "text",
+          "name": "st",
+          "title": "Street address",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "st2",
+          "title": "Street Address line 2"
+        },
+        {
+          "type": "text",
+          "name": "sub",
+          "title": "Suburb",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "state",
+          "title": "State"
+        },
+        {
+          "type": "text",
+          "name": "pc",
+          "title": "Postcode",
+          "isRequired": true
+        },
+        {
+          "type": "dropdown",
+          "name": "cty",
+          "title": "Country",
+          "description": "Your dog/s must live in Lower Hutt. If you live elsewhere, please complete a registration form with your local council.",
+          "choices": [
+            "Australia",
+            "Canada",
+            "India",
+            "Ireland",
+            "New Zealand",
+            "South Africa",
+            "United Kingdom",
+            "United States"
+          ],
+          "defaultValue": "New Zealand",
+          "placeholder": "Please select"
+        },
+        {
+          "type": "text",
+          "name": "post",
+          "title": "Postal address (if different)"
+        },
+        {
+          "type": "radiogroup",
+          "name": "cnt",
+          "title": "How many dogs are living on your property now?",
+          "isRequired": true,
+          "description": "This includes the new dog being registered.",
+          "choices": [
+            "1",
+            "2",
+            "3+"
+          ]
+        },
+        {
+          "type": "html",
+          "name": "lic",
+          "html": "<p>If you live in an urban area and want to keep more than 2 dogs over 3 months old, you will also need a special licence and to pay a fee. You can apply online – a link will be sent on completion of this form.</p>",
+          "visibleIf": "{cnt} = \"3+\""
+        },
+        {
+          "type": "text",
+          "name": "ph",
+          "title": "Contact Number",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "em",
+          "title": "Email address"
+        },
+        {
+          "type": "boolean",
+          "name": "inv",
+          "title": "Would you like to receive your annual registration invoice by email?",
+          "renderAs": "checkbox"
+        },
+        {
+          "type": "radiogroup",
+          "name": "prev",
+          "title": "Do you, or have you ever, had a dog registered with Hutt City Council?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "text",
+          "name": "dn",
+          "title": "Dog name",
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "sec",
+          "title": "Would you like to add a secondary owner?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "so",
+      "title": "Secondary Owner",
+      "visibleIf": "{sec} = \"Yes\"",
+      "elements": [
+        {
+          "type": "html",
+          "name": "s0",
+          "html": "<p>This person will be a registered owner for your dog/s, but will not be responsible for fees and invoices. This form must be filled out by the Primary Owner/Fee Payer.</p>"
+        },
+        {
+          "type": "text",
+          "name": "sfn",
+          "title": "First name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "sln",
+          "title": "Last name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "sdob",
+          "title": "Date of Birth",
+          "isRequired": true,
+          "inputType": "date"
+        },
+        {
+          "type": "text",
+          "name": "sem",
+          "title": "Email address"
+        },
+        {
+          "type": "text",
+          "name": "sph",
+          "title": "Contact number",
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "name": "d1",
+      "title": "Dog 1",
+      "elements": [
+        {
+          "type": "text",
+          "name": "d1_name",
+          "title": "Your dog's name",
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_mode",
+          "title": "Enter dog age using:",
+          "isRequired": true,
+          "choices": [
+            "Date of birth",
+            "Years & months"
+          ]
+        },
+        {
+          "type": "text",
+          "name": "d1_dob",
+          "title": "Date of birth",
+          "isRequired": true,
+          "inputType": "date",
+          "visibleIf": "{d1_mode} = \"Date of birth\""
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_ay",
+          "title": "Years",
+          "isRequired": true,
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"
+          ],
+          "placeholder": "Please select",
+          "visibleIf": "{d1_mode} = \"Years & months\""
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_am",
+          "title": "Months",
+          "isRequired": true,
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "placeholder": "Please select",
+          "visibleIf": "{d1_mode} = \"Years & months\""
+        },
+        {
+          "type": "html",
+          "name": "d1_h1",
+          "html": "<h3>How long have you owned {d1_displayName}?</h3>"
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_oy",
+          "title": "Years",
+          "isRequired": true,
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_om",
+          "title": "Months",
+          "isRequired": true,
+          "choices": [
+            "0-1",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "html",
+          "name": "d1_h2",
+          "html": "<h3>What does {d1_displayName} look like?</h3>"
+        },
+        {
+          "type": "html",
+          "name": "d1_hint",
+          "html": "<p>If they are a crossbreed, please enter both breeds. Crossbreed cannot be selected for primary breed – you can select &#39;Crossbreed&#39; as the secondary breed. Provide more detail in &#39;Distinguishing marks&#39; if needed.</p>"
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_pb",
+          "title": "Primary breed",
+          "isRequired": true,
+          "choices": [
+            "Afghan Hound",
+            "Airedale Terrier",
+            "Akita",
+            "Alaskan Malamute",
+            "Australian Cattle",
+            "Australian Kelpie",
+            "Australian Shepherd",
+            "Basset Hound",
+            "Beagle",
+            "Border Collie",
+            "Border Terrier",
+            "Boxer",
+            "Bulldog",
+            "Cavalier King Charles Spaniel",
+            "Chihuahua, Smooth Coat",
+            "Cocker Spaniel",
+            "Dachshund (Standard Smooth Haired)",
+            "Dalmatian",
+            "Dobermann",
+            "English Springer Spaniel",
+            "French Bulldog",
+            "German Shepherd",
+            "Golden Retriever",
+            "Great Dane",
+            "Greyhound",
+            "Huntaway",
+            "Jack Russell Terrier",
+            "Labrador Retriever",
+            "Lurcher",
+            "Maltese",
+            "Pomeranian",
+            "Poodle (Miniature)",
+            "Poodle (Standard)",
+            "Pug",
+            "Rottweiler",
+            "Samoyed",
+            "Shih Tzu",
+            "Siberian Husky",
+            "Staffordshire Bull Terrier",
+            "Weimaraner",
+            "West Highland White Terrier",
+            "Whippet",
+            "Yorkshire Terrier"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_sb",
+          "title": "Secondary breed",
+          "choices": [
+            "Crossbreed",
+            "Afghan Hound",
+            "Airedale Terrier",
+            "Akita",
+            "Alaskan Malamute",
+            "Australian Cattle",
+            "Australian Kelpie",
+            "Australian Shepherd",
+            "Basset Hound",
+            "Beagle",
+            "Border Collie",
+            "Border Terrier",
+            "Boxer",
+            "Bulldog",
+            "Cavalier King Charles Spaniel",
+            "Chihuahua, Smooth Coat",
+            "Cocker Spaniel",
+            "Dachshund (Standard Smooth Haired)",
+            "Dalmatian",
+            "Dobermann",
+            "English Springer Spaniel",
+            "French Bulldog",
+            "German Shepherd",
+            "Golden Retriever",
+            "Great Dane",
+            "Greyhound",
+            "Huntaway",
+            "Jack Russell Terrier",
+            "Labrador Retriever",
+            "Lurcher",
+            "Maltese",
+            "Pomeranian",
+            "Poodle (Miniature)",
+            "Poodle (Standard)",
+            "Pug",
+            "Rottweiler",
+            "Samoyed",
+            "Shih Tzu",
+            "Siberian Husky",
+            "Staffordshire Bull Terrier",
+            "Weimaraner",
+            "West Highland White Terrier",
+            "Whippet",
+            "Yorkshire Terrier"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_pc",
+          "title": "Primary colour",
+          "isRequired": true,
+          "choices": [
+            "Apricot",
+            "Bay",
+            "Beige",
+            "Biscuit",
+            "Black",
+            "Blenheim",
+            "Blonde",
+            "Blue",
+            "Blue Merle",
+            "Blue Roan",
+            "Brandy",
+            "Brindle",
+            "Bronze",
+            "Brown",
+            "Buckskin",
+            "Buff",
+            "Cameo",
+            "Caramel",
+            "Champagne",
+            "Charcoal",
+            "Chestnut",
+            "Chocolate",
+            "Coffee",
+            "Copper",
+            "Cream",
+            "Dapple",
+            "Dark Brown",
+            "Fawn",
+            "Ginger",
+            "Gold",
+            "Grey",
+            "Grizzle",
+            "Harlequin",
+            "Honey White",
+            "Hound",
+            "Landseer",
+            "Lemon",
+            "Liver",
+            "Mahogany",
+            "Merle",
+            "Mixed",
+            "Mustard",
+            "Orange",
+            "Party",
+            "Peach",
+            "Pepper",
+            "Red",
+            "Roan",
+            "Ruby",
+            "Rusty",
+            "Sable",
+            "Salt",
+            "Sandy",
+            "Silver",
+            "Tan",
+            "Taupe",
+            "Tri Colour",
+            "Various",
+            "Wheaten",
+            "White",
+            "Yellow"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_sc",
+          "title": "Secondary colour",
+          "choices": [
+            "Apricot",
+            "Bay",
+            "Beige",
+            "Biscuit",
+            "Black",
+            "Blenheim",
+            "Blonde",
+            "Blue",
+            "Blue Merle",
+            "Blue Roan",
+            "Brandy",
+            "Brindle",
+            "Bronze",
+            "Brown",
+            "Buckskin",
+            "Buff",
+            "Cameo",
+            "Caramel",
+            "Champagne",
+            "Charcoal",
+            "Chestnut",
+            "Chocolate",
+            "Coffee",
+            "Copper",
+            "Cream",
+            "Dapple",
+            "Dark Brown",
+            "Fawn",
+            "Ginger",
+            "Gold",
+            "Grey",
+            "Grizzle",
+            "Harlequin",
+            "Honey White",
+            "Hound",
+            "Landseer",
+            "Lemon",
+            "Liver",
+            "Mahogany",
+            "Merle",
+            "Mixed",
+            "Mustard",
+            "Orange",
+            "Party",
+            "Peach",
+            "Pepper",
+            "Red",
+            "Roan",
+            "Ruby",
+            "Rusty",
+            "Sable",
+            "Salt",
+            "Sandy",
+            "Silver",
+            "Tan",
+            "Taupe",
+            "Tri Colour",
+            "Various",
+            "Wheaten",
+            "White",
+            "Yellow"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "comment",
+          "name": "d1_marks",
+          "title": "Distinguishing marks"
+        },
+        {
+          "type": "file",
+          "name": "d1_photo",
+          "title": "Optional: upload a photo of your dog to add to their record",
+          "allowMultiple": false
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_sex",
+          "title": "Sex of your dog",
+          "isRequired": true,
+          "choices": [
+            "Male",
+            "Female"
+          ]
+        },
+        {
+          "type": "html",
+          "name": "d1_h3",
+          "html": "<h3>Has your dog been...</h3>"
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_chip",
+          "title": "microchipped?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_desex",
+          "title": "desexed?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_adopt",
+          "title": "recently adopted from SPCA or HUHA?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_imp",
+          "title": "recently imported from overseas?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_other",
+          "title": "registered for this year with another council?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "text",
+          "name": "d1_chipno",
+          "title": "Microchip number",
+          "isRequired": true,
+          "description": "Any dog born after 1 July 2006 must be microchipped except those used for herding and driving stock. You can be fined if your dog is not microchipped within two months of being registered.",
+          "visibleIf": "{d1_chip} = \"Yes\""
+        },
+        {
+          "type": "file",
+          "name": "d1_dcert",
+          "title": "Please upload a copy of their desex certificate, or reselect 'No'",
+          "isRequired": true,
+          "description": "Required for discounted registration for desexed dogs.",
+          "allowMultiple": false,
+          "visibleIf": "{d1_desex} = \"Yes\""
+        },
+        {
+          "type": "file",
+          "name": "d1_acert",
+          "title": "Please provide proof of adoption, or reselect 'No'",
+          "isRequired": true,
+          "allowMultiple": false,
+          "visibleIf": "{d1_adopt} = \"Yes\""
+        },
+        {
+          "type": "file",
+          "name": "d1_icert",
+          "title": "Please provide import paperwork, or reselect 'No'",
+          "isRequired": true,
+          "allowMultiple": false,
+          "visibleIf": "{d1_imp} = \"Yes\""
+        },
+        {
+          "type": "dropdown",
+          "name": "d1_oc",
+          "title": "Council they are registered with",
+          "isRequired": true,
+          "choices": [
+            "Auckland",
+            "Christchurch City",
+            "Dunedin City",
+            "Hamilton City",
+            "Hutt City",
+            "Kapiti Coast District",
+            "Masterton District",
+            "Napier City",
+            "Porirua City",
+            "Tauranga City",
+            "Upper Hutt City",
+            "Wellington City"
+          ],
+          "placeholder": "Please select",
+          "visibleIf": "{d1_other} = \"Yes\""
+        },
+        {
+          "type": "text",
+          "name": "d1_otag",
+          "title": "Council tag or ID number",
+          "isRequired": true,
+          "visibleIf": "{d1_other} = \"Yes\""
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_dis",
+          "title": "Is your dog a certified disability assist dog?",
+          "isRequired": true,
+          "description": "Only dogs certified by one of the seven organisations listed in the Dog Control Act qualify as Disability Assist Dogs.",
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "file",
+          "name": "d1_discert",
+          "title": "Please upload their certification, or reselect 'No'",
+          "isRequired": true,
+          "allowMultiple": false,
+          "visibleIf": "{d1_dis} = \"Yes\""
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_work",
+          "title": "Is your dog a working dog used for herding and driving stock?",
+          "isRequired": true,
+          "description": "If yes, you will be asked to complete a working dog declaration after processing. An approved declaration exempts the dog from microchipping and full registration fee.",
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_tag",
+          "title": "Please specify which size tag you would like (subject to availability)",
+          "isRequired": true,
+          "choices": [
+            "Small (25mm)",
+            "Large (35mm)"
+          ]
+        },
+        {
+          "type": "comment",
+          "name": "d1_extra",
+          "title": "Any additional details"
+        },
+        {
+          "type": "radiogroup",
+          "name": "d1_more",
+          "title": "Add another new dog with the same owner details",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "d2",
+      "title": "Dog 2",
+      "visibleIf": "{d1_more} = \"Yes\"",
+      "elements": [
+        {
+          "type": "text",
+          "name": "d2_name",
+          "title": "Your dog's name",
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_mode",
+          "title": "Enter dog age using:",
+          "isRequired": true,
+          "choices": [
+            "Date of birth",
+            "Years & months"
+          ]
+        },
+        {
+          "type": "text",
+          "name": "d2_dob",
+          "title": "Date of birth",
+          "isRequired": true,
+          "inputType": "date",
+          "visibleIf": "{d2_mode} = \"Date of birth\""
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_ay",
+          "title": "Years",
+          "isRequired": true,
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"
+          ],
+          "placeholder": "Please select",
+          "visibleIf": "{d2_mode} = \"Years & months\""
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_am",
+          "title": "Months",
+          "isRequired": true,
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "placeholder": "Please select",
+          "visibleIf": "{d2_mode} = \"Years & months\""
+        },
+        {
+          "type": "html",
+          "name": "d2_h1",
+          "html": "<h3>How long have you owned {d2_displayName}?</h3>"
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_oy",
+          "title": "Years",
+          "isRequired": true,
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_om",
+          "title": "Months",
+          "isRequired": true,
+          "choices": [
+            "0-1",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "html",
+          "name": "d2_h2",
+          "html": "<h3>What does {d2_displayName} look like?</h3>"
+        },
+        {
+          "type": "html",
+          "name": "d2_hint",
+          "html": "<p>If they are a crossbreed, please enter both breeds. Crossbreed cannot be selected for primary breed – you can select &#39;Crossbreed&#39; as the secondary breed. Provide more detail in &#39;Distinguishing marks&#39; if needed.</p>"
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_pb",
+          "title": "Primary breed",
+          "isRequired": true,
+          "choices": [
+            "Afghan Hound",
+            "Airedale Terrier",
+            "Akita",
+            "Alaskan Malamute",
+            "Australian Cattle",
+            "Australian Kelpie",
+            "Australian Shepherd",
+            "Basset Hound",
+            "Beagle",
+            "Border Collie",
+            "Border Terrier",
+            "Boxer",
+            "Bulldog",
+            "Cavalier King Charles Spaniel",
+            "Chihuahua, Smooth Coat",
+            "Cocker Spaniel",
+            "Dachshund (Standard Smooth Haired)",
+            "Dalmatian",
+            "Dobermann",
+            "English Springer Spaniel",
+            "French Bulldog",
+            "German Shepherd",
+            "Golden Retriever",
+            "Great Dane",
+            "Greyhound",
+            "Huntaway",
+            "Jack Russell Terrier",
+            "Labrador Retriever",
+            "Lurcher",
+            "Maltese",
+            "Pomeranian",
+            "Poodle (Miniature)",
+            "Poodle (Standard)",
+            "Pug",
+            "Rottweiler",
+            "Samoyed",
+            "Shih Tzu",
+            "Siberian Husky",
+            "Staffordshire Bull Terrier",
+            "Weimaraner",
+            "West Highland White Terrier",
+            "Whippet",
+            "Yorkshire Terrier"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_sb",
+          "title": "Secondary breed",
+          "choices": [
+            "Crossbreed",
+            "Afghan Hound",
+            "Airedale Terrier",
+            "Akita",
+            "Alaskan Malamute",
+            "Australian Cattle",
+            "Australian Kelpie",
+            "Australian Shepherd",
+            "Basset Hound",
+            "Beagle",
+            "Border Collie",
+            "Border Terrier",
+            "Boxer",
+            "Bulldog",
+            "Cavalier King Charles Spaniel",
+            "Chihuahua, Smooth Coat",
+            "Cocker Spaniel",
+            "Dachshund (Standard Smooth Haired)",
+            "Dalmatian",
+            "Dobermann",
+            "English Springer Spaniel",
+            "French Bulldog",
+            "German Shepherd",
+            "Golden Retriever",
+            "Great Dane",
+            "Greyhound",
+            "Huntaway",
+            "Jack Russell Terrier",
+            "Labrador Retriever",
+            "Lurcher",
+            "Maltese",
+            "Pomeranian",
+            "Poodle (Miniature)",
+            "Poodle (Standard)",
+            "Pug",
+            "Rottweiler",
+            "Samoyed",
+            "Shih Tzu",
+            "Siberian Husky",
+            "Staffordshire Bull Terrier",
+            "Weimaraner",
+            "West Highland White Terrier",
+            "Whippet",
+            "Yorkshire Terrier"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_pc",
+          "title": "Primary colour",
+          "isRequired": true,
+          "choices": [
+            "Apricot",
+            "Bay",
+            "Beige",
+            "Biscuit",
+            "Black",
+            "Blenheim",
+            "Blonde",
+            "Blue",
+            "Blue Merle",
+            "Blue Roan",
+            "Brandy",
+            "Brindle",
+            "Bronze",
+            "Brown",
+            "Buckskin",
+            "Buff",
+            "Cameo",
+            "Caramel",
+            "Champagne",
+            "Charcoal",
+            "Chestnut",
+            "Chocolate",
+            "Coffee",
+            "Copper",
+            "Cream",
+            "Dapple",
+            "Dark Brown",
+            "Fawn",
+            "Ginger",
+            "Gold",
+            "Grey",
+            "Grizzle",
+            "Harlequin",
+            "Honey White",
+            "Hound",
+            "Landseer",
+            "Lemon",
+            "Liver",
+            "Mahogany",
+            "Merle",
+            "Mixed",
+            "Mustard",
+            "Orange",
+            "Party",
+            "Peach",
+            "Pepper",
+            "Red",
+            "Roan",
+            "Ruby",
+            "Rusty",
+            "Sable",
+            "Salt",
+            "Sandy",
+            "Silver",
+            "Tan",
+            "Taupe",
+            "Tri Colour",
+            "Various",
+            "Wheaten",
+            "White",
+            "Yellow"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_sc",
+          "title": "Secondary colour",
+          "choices": [
+            "Apricot",
+            "Bay",
+            "Beige",
+            "Biscuit",
+            "Black",
+            "Blenheim",
+            "Blonde",
+            "Blue",
+            "Blue Merle",
+            "Blue Roan",
+            "Brandy",
+            "Brindle",
+            "Bronze",
+            "Brown",
+            "Buckskin",
+            "Buff",
+            "Cameo",
+            "Caramel",
+            "Champagne",
+            "Charcoal",
+            "Chestnut",
+            "Chocolate",
+            "Coffee",
+            "Copper",
+            "Cream",
+            "Dapple",
+            "Dark Brown",
+            "Fawn",
+            "Ginger",
+            "Gold",
+            "Grey",
+            "Grizzle",
+            "Harlequin",
+            "Honey White",
+            "Hound",
+            "Landseer",
+            "Lemon",
+            "Liver",
+            "Mahogany",
+            "Merle",
+            "Mixed",
+            "Mustard",
+            "Orange",
+            "Party",
+            "Peach",
+            "Pepper",
+            "Red",
+            "Roan",
+            "Ruby",
+            "Rusty",
+            "Sable",
+            "Salt",
+            "Sandy",
+            "Silver",
+            "Tan",
+            "Taupe",
+            "Tri Colour",
+            "Various",
+            "Wheaten",
+            "White",
+            "Yellow"
+          ],
+          "placeholder": "Please select"
+        },
+        {
+          "type": "comment",
+          "name": "d2_marks",
+          "title": "Distinguishing marks"
+        },
+        {
+          "type": "file",
+          "name": "d2_photo",
+          "title": "Optional: upload a photo of your dog to add to their record",
+          "allowMultiple": false
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_sex",
+          "title": "Sex of your dog",
+          "isRequired": true,
+          "choices": [
+            "Male",
+            "Female"
+          ]
+        },
+        {
+          "type": "html",
+          "name": "d2_h3",
+          "html": "<h3>Has your dog been...</h3>"
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_chip",
+          "title": "microchipped?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_desex",
+          "title": "desexed?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_adopt",
+          "title": "recently adopted from SPCA or HUHA?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_imp",
+          "title": "recently imported from overseas?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_other",
+          "title": "registered for this year with another council?",
+          "isRequired": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "text",
+          "name": "d2_chipno",
+          "title": "Microchip number",
+          "isRequired": true,
+          "description": "Any dog born after 1 July 2006 must be microchipped except those used for herding and driving stock. You can be fined if your dog is not microchipped within two months of being registered.",
+          "visibleIf": "{d2_chip} = \"Yes\""
+        },
+        {
+          "type": "file",
+          "name": "d2_dcert",
+          "title": "Please upload a copy of their desex certificate, or reselect 'No'",
+          "isRequired": true,
+          "description": "Required for discounted registration for desexed dogs.",
+          "allowMultiple": false,
+          "visibleIf": "{d2_desex} = \"Yes\""
+        },
+        {
+          "type": "file",
+          "name": "d2_acert",
+          "title": "Please provide proof of adoption, or reselect 'No'",
+          "isRequired": true,
+          "allowMultiple": false,
+          "visibleIf": "{d2_adopt} = \"Yes\""
+        },
+        {
+          "type": "file",
+          "name": "d2_icert",
+          "title": "Please provide import paperwork, or reselect 'No'",
+          "isRequired": true,
+          "allowMultiple": false,
+          "visibleIf": "{d2_imp} = \"Yes\""
+        },
+        {
+          "type": "dropdown",
+          "name": "d2_oc",
+          "title": "Council they are registered with",
+          "isRequired": true,
+          "choices": [
+            "Auckland",
+            "Christchurch City",
+            "Dunedin City",
+            "Hamilton City",
+            "Hutt City",
+            "Kapiti Coast District",
+            "Masterton District",
+            "Napier City",
+            "Porirua City",
+            "Tauranga City",
+            "Upper Hutt City",
+            "Wellington City"
+          ],
+          "placeholder": "Please select",
+          "visibleIf": "{d2_other} = \"Yes\""
+        },
+        {
+          "type": "text",
+          "name": "d2_otag",
+          "title": "Council tag or ID number",
+          "isRequired": true,
+          "visibleIf": "{d2_other} = \"Yes\""
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_dis",
+          "title": "Is your dog a certified disability assist dog?",
+          "isRequired": true,
+          "description": "Only dogs certified by one of the seven organisations listed in the Dog Control Act qualify as Disability Assist Dogs.",
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "file",
+          "name": "d2_discert",
+          "title": "Please upload their certification, or reselect 'No'",
+          "isRequired": true,
+          "allowMultiple": false,
+          "visibleIf": "{d2_dis} = \"Yes\""
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_work",
+          "title": "Is your dog a working dog used for herding and driving stock?",
+          "isRequired": true,
+          "description": "If yes, you will be asked to complete a working dog declaration after processing. An approved declaration exempts the dog from microchipping and full registration fee.",
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "d2_tag",
+          "title": "Please specify which size tag you would like (subject to availability)",
+          "isRequired": true,
+          "choices": [
+            "Small (25mm)",
+            "Large (35mm)"
+          ]
+        },
+        {
+          "type": "comment",
+          "name": "d2_extra",
+          "title": "Any additional details"
+        }
+      ]
+    },
+    {
+      "name": "dec",
+      "title": "Declaration",
+      "elements": [
+        {
+          "type": "boolean",
+          "name": "c1",
+          "title": "In submitting this application to Hutt City Council, I declare that I, the person submitting the form, am the owner of, and responsible for, the dog/s described in this form and the information I have provided is true and correct",
+          "isRequired": true,
+          "renderAs": "checkbox",
+          "validators": [
+            {
+              "type": "expression",
+              "expression": "{c1} = true",
+              "text": "You must agree to this declaration."
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "name": "c2",
+          "title": "I agree to my obligations under the Dog Control Act",
+          "isRequired": true,
+          "renderAs": "checkbox",
+          "validators": [
+            {
+              "type": "expression",
+              "expression": "{c2} = true",
+              "text": "You must agree to this declaration."
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "name": "c3",
+          "title": "I understand that if my dog breaches any Hutt City Council bylaws I will be liable for infringement fines.",
+          "isRequired": true,
+          "renderAs": "checkbox",
+          "validators": [
+            {
+              "type": "expression",
+              "expression": "{c3} = true",
+              "text": "You must agree to this declaration."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "dfn",
+          "title": "First Name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "dln",
+          "title": "Last name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "sig",
+          "title": "Signed",
+          "isRequired": true,
+          "placeholder": "Type signature"
+        }
+      ]
+    }
+  ]
+}

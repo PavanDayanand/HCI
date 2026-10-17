@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
-import type { FormRecord, SubmissionRecord, SurveySchema } from "../types/form.ts";
+import type { AnalyticsWidget, FormRecord, SubmissionRecord, SurveySchema } from "../types/form.ts";
 import { FormContext } from "./formContext.ts";
 
 const starterSchema: SurveySchema = {
@@ -41,9 +41,48 @@ const starterForm: FormRecord = {
   updatedAt: new Date().toISOString(),
 };
 
+const starterSubmissions: SubmissionRecord[] = [
+  {
+    id: "sub-1",
+    formId: starterForm.id,
+    formTitle: starterForm.title,
+    answers: { fullName: "Aroha Chen", suburb: "Petone", message: "More lighting on Jackson Street." },
+    submittedAt: new Date().toISOString(),
+  },
+  {
+    id: "sub-2",
+    formId: starterForm.id,
+    formTitle: starterForm.title,
+    answers: { fullName: "James Patel", suburb: "Lower Hutt", message: "The library hours work well." },
+    submittedAt: new Date().toISOString(),
+  },
+  {
+    id: "sub-3",
+    formId: starterForm.id,
+    formTitle: starterForm.title,
+    answers: { fullName: "Mere Te Rangi", suburb: "Wainuiomata", message: "Please add a weekend bus." },
+    submittedAt: new Date().toISOString(),
+  },
+  {
+    id: "sub-4",
+    formId: starterForm.id,
+    formTitle: starterForm.title,
+    answers: { fullName: "Sam Walsh", suburb: "Petone", message: "The playground is looking great." },
+    submittedAt: new Date().toISOString(),
+  },
+  {
+    id: "sub-5",
+    formId: starterForm.id,
+    formTitle: starterForm.title,
+    answers: { fullName: "Nina Costa", suburb: "Eastbourne", message: "More recycling bins on the waterfront." },
+    submittedAt: new Date().toISOString(),
+  },
+];
+
 export function FormProvider({ children }: { children: ReactNode }) {
   const [forms, setForms] = useState<FormRecord[]>([starterForm]);
-  const [submissions, setSubmissions] = useState<SubmissionRecord[]>([]);
+  const [submissions, setSubmissions] = useState<SubmissionRecord[]>(starterSubmissions);
+  const [widgets, setWidgets] = useState<AnalyticsWidget[]>([]);
 
   function saveForm(nextForm: FormRecord) {
     setForms((currentForms) => {
@@ -73,15 +112,35 @@ export function FormProvider({ children }: { children: ReactNode }) {
 
   function deleteForm(formId: string) {
     setForms((currentForms) => currentForms.filter((form) => form.id !== formId));
+    setWidgets((currentWidgets) => currentWidgets.filter((widget) => widget.formId !== formId));
   }
 
   function addSubmission(submission: SubmissionRecord) {
     setSubmissions((currentSubmissions) => [submission, ...currentSubmissions]);
   }
 
+  function addWidget(widget: AnalyticsWidget) {
+    setWidgets((currentWidgets) => [widget, ...currentWidgets]);
+  }
+
+  function deleteWidget(widgetId: string) {
+    setWidgets((currentWidgets) => currentWidgets.filter((widget) => widget.id !== widgetId));
+  }
+
   return (
     <FormContext.Provider
-      value={{ forms, submissions, saveForm, publishForm, unpublishForm, deleteForm, addSubmission }}
+      value={{
+        forms,
+        submissions,
+        widgets,
+        saveForm,
+        publishForm,
+        unpublishForm,
+        deleteForm,
+        addSubmission,
+        addWidget,
+        deleteWidget,
+      }}
     >
       {children}
     </FormContext.Provider>

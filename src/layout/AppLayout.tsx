@@ -1,5 +1,6 @@
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import DynamicFormOutlinedIcon from "@mui/icons-material/DynamicFormOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -49,7 +50,10 @@ export function AppLayout() {
 
   const navItems: NavItem[] =
     role === "admin"
-      ? [{ label: "Form Builder", to: "/admin/forms", icon: <DynamicFormOutlinedIcon fontSize="small" /> }]
+      ? [
+          { label: "Form Builder", to: "/admin/forms", icon: <DynamicFormOutlinedIcon fontSize="small" /> },
+          { label: "Analytics", to: "/admin/analytics", icon: <BarChartOutlinedIcon fontSize="small" /> },
+        ]
       : [{ label: "Forms", to: "/forms", icon: <AssignmentOutlinedIcon fontSize="small" /> }];
 
   function closeMobileNav() {
@@ -108,8 +112,8 @@ export function AppLayout() {
             HCI
           </Typography>
           {!collapsed ? (
-            <Typography sx={{ fontSize: 11, color: "text.secondary", mt: 0.5 }}>
-              Forms workspace
+            <Typography sx={{ fontSize: 11, color: "text.secondary", mt: 0.5, lineHeight: 1.3 }}>
+              Hutt City Intelligence
             </Typography>
           ) : null}
         </Box>
@@ -275,7 +279,6 @@ export function AppLayout() {
               >
                 <SidebarIcon expanded={false} />
               </IconButton>
-              <Typography sx={{ fontSize: 12, color: "text.secondary", fontWeight: 500 }}>Forms workspace</Typography>
             </Box>
             <Tooltip title={mode === "light" ? "Dark mode" : "Light mode"}>
               <IconButton onClick={toggleMode} aria-label="Toggle color mode" size="small" sx={{ width: 36, height: 36 }}>
